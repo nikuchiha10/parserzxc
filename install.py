@@ -89,4 +89,40 @@ MAX_ARTICLES_PER_RUN=50
 REQUEST_DELAY=1
 """
         
-        with open('.env', 'w', encoding='
+        with open('.env', 'w', encoding='utf-8') as f:
+            f.write(env_content)
+        
+        print("✅ Файл .env создан. Отредактируйте его при необходимости.")
+
+def main():
+    """Основная функция установки"""
+    print("🚀 PRO Knowledge Parser - Установка")
+    print("=" * 50)
+    
+    # Проверяем Python версию
+    if sys.version_info < (3, 8):
+        print("❌ Требуется Python 3.8 или выше")
+        sys.exit(1)
+    
+    print(f"✅ Python {sys.version_info.major}.{sys.version_info.minor}.{sys.version_info.micro}")
+    print(f"✅ ОС: {platform.system()} {platform.release()}")
+    
+    # Выполняем установку
+    setup_directories()
+    
+    if not install_dependencies():
+        print("❌ Установка прервана из-за ошибок")
+        sys.exit(1)
+    
+    check_chrome_driver()
+    create_env_file()
+    
+    print("\n🎉 Установка завершена успешно!")
+    print("\n📚 Дальнейшие действия:")
+    print("1. Отредактируйте .env файл при необходимости")
+    print("2. Запустите бота: python main.py --mode bot")
+    print("3. Или протестируйте парсер: python main.py --mode parser")
+    print("4. Для справки: python main.py --help")
+
+if __name__ == "__main__":
+    main()
